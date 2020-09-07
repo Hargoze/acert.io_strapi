@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "links",
+  "info": {
+    "name": "Link"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "ready",
+        "beta",
+        "coming_soon"
+      ],
+      "default": "ready"
+    },
+    "header": {
+      "model": "header",
+      "via": "links"
+    }
+  }
+}
