@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recommandations",
+  "info": {
+    "name": "Recommandation"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "job": {
+      "type": "string"
+    },
+    "quote": {
+      "type": "text"
+    },
+    "profil": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

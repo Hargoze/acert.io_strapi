@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "highlights",
+  "info": {
+    "name": "highlight"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "headers": {
+      "collection": "header",
+      "via": "highlights",
+      "dominant": true
+    }
+  }
+}

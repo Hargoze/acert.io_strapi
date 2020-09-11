@@ -12,20 +12,18 @@
     "name": {
       "type": "string"
     },
-    "pictures": {
-      "collection": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false
-    },
     "links": {
-      "via": "header",
-      "collection": "link"
+      "collection": "link",
+      "via": "header"
+    },
+    "images": {
+      "via": "headers",
+      "collection": "picture",
+      "dominant": true
+    },
+    "highlights": {
+      "via": "headers",
+      "collection": "highlight"
     }
   }
 }

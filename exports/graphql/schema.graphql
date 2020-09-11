@@ -11,6 +11,14 @@ type createHeaderPayload {
   header: Header
 }
 
+input createHighlightInput {
+  data: HighlightInput
+}
+
+type createHighlightPayload {
+  highlight: Highlight
+}
+
 input createLinkInput {
   data: LinkInput
 }
@@ -19,12 +27,36 @@ type createLinkPayload {
   link: Link
 }
 
+input createPictureInput {
+  data: PictureInput
+}
+
+type createPicturePayload {
+  picture: Picture
+}
+
+input createRecommandationInput {
+  data: RecommandationInput
+}
+
+type createRecommandationPayload {
+  recommandation: Recommandation
+}
+
 input createRoleInput {
   data: RoleInput
 }
 
 type createRolePayload {
   role: UsersPermissionsRole
+}
+
+input createSectionInput {
+  data: SectionInput
+}
+
+type createSectionPayload {
+  section: Section
 }
 
 input createUserInput {
@@ -57,6 +89,14 @@ type deleteHeaderPayload {
   header: Header
 }
 
+input deleteHighlightInput {
+  where: InputID
+}
+
+type deleteHighlightPayload {
+  highlight: Highlight
+}
+
 input deleteLinkInput {
   where: InputID
 }
@@ -65,12 +105,36 @@ type deleteLinkPayload {
   link: Link
 }
 
+input deletePictureInput {
+  where: InputID
+}
+
+type deletePicturePayload {
+  picture: Picture
+}
+
+input deleteRecommandationInput {
+  where: InputID
+}
+
+type deleteRecommandationPayload {
+  recommandation: Recommandation
+}
+
 input deleteRoleInput {
   where: InputID
 }
 
 type deleteRolePayload {
   role: UsersPermissionsRole
+}
+
+input deleteSectionInput {
+  where: InputID
+}
+
+type deleteSectionPayload {
+  section: Section
 }
 
 input deleteUserInput {
@@ -103,8 +167,17 @@ input editFileInput {
 
 input editHeaderInput {
   name: String
-  pictures: [ID]
   links: [ID]
+  images: [ID]
+  highlights: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editHighlightInput {
+  name: String
+  href: String
+  headers: [ID]
   created_by: ID
   updated_by: ID
 }
@@ -118,12 +191,40 @@ input editLinkInput {
   updated_by: ID
 }
 
+input editPictureInput {
+  image: ID
+  description: String
+  link: String
+  href: String
+  headers: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editRecommandationInput {
+  name: String
+  job: String
+  quote: String
+  profil: ID
+  created_by: ID
+  updated_by: ID
+}
+
 input editRoleInput {
   name: String
   description: String
   type: String
   permissions: [ID]
   users: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editSectionInput {
+  titre: String
+  description: String
+  image: ID
+  direction: ENUM_SECTION_DIRECTION
   created_by: ID
   updated_by: ID
 }
@@ -145,6 +246,11 @@ enum ENUM_LINK_STATUS {
   ready
   beta
   coming_soon
+}
+
+enum ENUM_SECTION_DIRECTION {
+  left
+  right
 }
 
 input FileInput {
@@ -174,8 +280,9 @@ type Header {
   name: String
   created_by: AdminUser
   updated_by: AdminUser
-  pictures(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
   links(sort: String, limit: Int, start: Int, where: JSON): [Link]
+  images(sort: String, limit: Int, start: Int, where: JSON): [Picture]
+  highlights(sort: String, limit: Int, start: Int, where: JSON): [Highlight]
 }
 
 type HeaderAggregator {
@@ -230,8 +337,84 @@ type HeaderGroupBy {
 
 input HeaderInput {
   name: String
-  pictures: [ID]
   links: [ID]
+  images: [ID]
+  highlights: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+type Highlight {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String
+  href: String
+  created_by: AdminUser
+  updated_by: AdminUser
+  headers(sort: String, limit: Int, start: Int, where: JSON): [Header]
+}
+
+type HighlightAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type HighlightConnection {
+  values: [Highlight]
+  groupBy: HighlightGroupBy
+  aggregate: HighlightAggregator
+}
+
+type HighlightConnectionCreated_at {
+  key: DateTime
+  connection: HighlightConnection
+}
+
+type HighlightConnectionCreated_by {
+  key: ID
+  connection: HighlightConnection
+}
+
+type HighlightConnectionHref {
+  key: String
+  connection: HighlightConnection
+}
+
+type HighlightConnectionId {
+  key: ID
+  connection: HighlightConnection
+}
+
+type HighlightConnectionName {
+  key: String
+  connection: HighlightConnection
+}
+
+type HighlightConnectionUpdated_at {
+  key: DateTime
+  connection: HighlightConnection
+}
+
+type HighlightConnectionUpdated_by {
+  key: ID
+  connection: HighlightConnection
+}
+
+type HighlightGroupBy {
+  id: [HighlightConnectionId]
+  created_at: [HighlightConnectionCreated_at]
+  updated_at: [HighlightConnectionUpdated_at]
+  name: [HighlightConnectionName]
+  href: [HighlightConnectionHref]
+  created_by: [HighlightConnectionCreated_by]
+  updated_by: [HighlightConnectionUpdated_by]
+}
+
+input HighlightInput {
+  name: String
+  href: String
+  headers: [ID]
   created_by: ID
   updated_by: ID
 }
@@ -337,15 +520,27 @@ input LinkInput {
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Header | HeaderConnection | HeaderAggregator | HeaderGroupBy | HeaderConnectionId | HeaderConnectionCreated_at | HeaderConnectionUpdated_at | HeaderConnectionName | HeaderConnectionCreated_by | HeaderConnectionUpdated_by | createHeaderPayload | updateHeaderPayload | deleteHeaderPayload | Link | LinkConnection | LinkAggregator | LinkGroupBy | LinkConnectionId | LinkConnectionCreated_at | LinkConnectionUpdated_at | LinkConnectionText | LinkConnectionHref | LinkConnectionStatus | LinkConnectionHeader | LinkConnectionCreated_by | LinkConnectionUpdated_by | createLinkPayload | updateLinkPayload | deleteLinkPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Header | HeaderConnection | HeaderAggregator | HeaderGroupBy | HeaderConnectionId | HeaderConnectionCreated_at | HeaderConnectionUpdated_at | HeaderConnectionName | HeaderConnectionCreated_by | HeaderConnectionUpdated_by | createHeaderPayload | updateHeaderPayload | deleteHeaderPayload | Highlight | HighlightConnection | HighlightAggregator | HighlightGroupBy | HighlightConnectionId | HighlightConnectionCreated_at | HighlightConnectionUpdated_at | HighlightConnectionName | HighlightConnectionHref | HighlightConnectionCreated_by | HighlightConnectionUpdated_by | createHighlightPayload | updateHighlightPayload | deleteHighlightPayload | Link | LinkConnection | LinkAggregator | LinkGroupBy | LinkConnectionId | LinkConnectionCreated_at | LinkConnectionUpdated_at | LinkConnectionText | LinkConnectionHref | LinkConnectionStatus | LinkConnectionHeader | LinkConnectionCreated_by | LinkConnectionUpdated_by | createLinkPayload | updateLinkPayload | deleteLinkPayload | Picture | PictureConnection | PictureAggregator | PictureGroupBy | PictureConnectionId | PictureConnectionCreated_at | PictureConnectionUpdated_at | PictureConnectionImage | PictureConnectionDescription | PictureConnectionLink | PictureConnectionHref | PictureConnectionCreated_by | PictureConnectionUpdated_by | createPicturePayload | updatePicturePayload | deletePicturePayload | Recommandation | RecommandationConnection | RecommandationAggregator | RecommandationGroupBy | RecommandationConnectionId | RecommandationConnectionCreated_at | RecommandationConnectionUpdated_at | RecommandationConnectionName | RecommandationConnectionJob | RecommandationConnectionQuote | RecommandationConnectionProfil | RecommandationConnectionCreated_by | RecommandationConnectionUpdated_by | createRecommandationPayload | updateRecommandationPayload | deleteRecommandationPayload | Section | SectionConnection | SectionAggregator | SectionGroupBy | SectionConnectionId | SectionConnectionCreated_at | SectionConnectionUpdated_at | SectionConnectionTitre | SectionConnectionDescription | SectionConnectionImage | SectionConnectionDirection | SectionConnectionCreated_by | SectionConnectionUpdated_by | createSectionPayload | updateSectionPayload | deleteSectionPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   createHeader(input: createHeaderInput): createHeaderPayload
   updateHeader(input: updateHeaderInput): updateHeaderPayload
   deleteHeader(input: deleteHeaderInput): deleteHeaderPayload
+  createHighlight(input: createHighlightInput): createHighlightPayload
+  updateHighlight(input: updateHighlightInput): updateHighlightPayload
+  deleteHighlight(input: deleteHighlightInput): deleteHighlightPayload
   createLink(input: createLinkInput): createLinkPayload
   updateLink(input: updateLinkInput): updateLinkPayload
   deleteLink(input: deleteLinkInput): deleteLinkPayload
+  createPicture(input: createPictureInput): createPicturePayload
+  updatePicture(input: updatePictureInput): updatePicturePayload
+  deletePicture(input: deletePictureInput): deletePicturePayload
+  createRecommandation(input: createRecommandationInput): createRecommandationPayload
+  updateRecommandation(input: updateRecommandationInput): updateRecommandationPayload
+  deleteRecommandation(input: deleteRecommandationInput): deleteRecommandationPayload
+  createSection(input: createSectionInput): createSectionPayload
+  updateSection(input: updateSectionInput): updateSectionPayload
+  deleteSection(input: deleteSectionInput): deleteSectionPayload
 
   """Create a new role"""
   createRole(input: createRoleInput): createRolePayload
@@ -373,13 +568,116 @@ type Mutation {
   emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
 }
 
+type Picture {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  image: UploadFile
+  description: String
+  link: String
+  href: String
+  created_by: AdminUser
+  updated_by: AdminUser
+  headers(sort: String, limit: Int, start: Int, where: JSON): [Header]
+}
+
+type PictureAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type PictureConnection {
+  values: [Picture]
+  groupBy: PictureGroupBy
+  aggregate: PictureAggregator
+}
+
+type PictureConnectionCreated_at {
+  key: DateTime
+  connection: PictureConnection
+}
+
+type PictureConnectionCreated_by {
+  key: ID
+  connection: PictureConnection
+}
+
+type PictureConnectionDescription {
+  key: String
+  connection: PictureConnection
+}
+
+type PictureConnectionHref {
+  key: String
+  connection: PictureConnection
+}
+
+type PictureConnectionId {
+  key: ID
+  connection: PictureConnection
+}
+
+type PictureConnectionImage {
+  key: ID
+  connection: PictureConnection
+}
+
+type PictureConnectionLink {
+  key: String
+  connection: PictureConnection
+}
+
+type PictureConnectionUpdated_at {
+  key: DateTime
+  connection: PictureConnection
+}
+
+type PictureConnectionUpdated_by {
+  key: ID
+  connection: PictureConnection
+}
+
+type PictureGroupBy {
+  id: [PictureConnectionId]
+  created_at: [PictureConnectionCreated_at]
+  updated_at: [PictureConnectionUpdated_at]
+  image: [PictureConnectionImage]
+  description: [PictureConnectionDescription]
+  link: [PictureConnectionLink]
+  href: [PictureConnectionHref]
+  created_by: [PictureConnectionCreated_by]
+  updated_by: [PictureConnectionUpdated_by]
+}
+
+input PictureInput {
+  image: ID
+  description: String
+  link: String
+  href: String
+  headers: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
 type Query {
   header(id: ID!): Header
   headers(sort: String, limit: Int, start: Int, where: JSON): [Header]
   headersConnection(sort: String, limit: Int, start: Int, where: JSON): HeaderConnection
+  highlight(id: ID!): Highlight
+  highlights(sort: String, limit: Int, start: Int, where: JSON): [Highlight]
+  highlightsConnection(sort: String, limit: Int, start: Int, where: JSON): HighlightConnection
   link(id: ID!): Link
   links(sort: String, limit: Int, start: Int, where: JSON): [Link]
   linksConnection(sort: String, limit: Int, start: Int, where: JSON): LinkConnection
+  picture(id: ID!): Picture
+  pictures(sort: String, limit: Int, start: Int, where: JSON): [Picture]
+  picturesConnection(sort: String, limit: Int, start: Int, where: JSON): PictureConnection
+  recommandation(id: ID!): Recommandation
+  recommandations(sort: String, limit: Int, start: Int, where: JSON): [Recommandation]
+  recommandationsConnection(sort: String, limit: Int, start: Int, where: JSON): RecommandationConnection
+  section(id: ID!): Section
+  sections(sort: String, limit: Int, start: Int, where: JSON): [Section]
+  sectionsConnection(sort: String, limit: Int, start: Int, where: JSON): SectionConnection
   files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
   filesConnection(sort: String, limit: Int, start: Int, where: JSON): UploadFileConnection
   role(id: ID!): UsersPermissionsRole
@@ -395,12 +693,190 @@ type Query {
   me: UsersPermissionsMe
 }
 
+type Recommandation {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String
+  job: String
+  quote: String
+  profil: UploadFile
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type RecommandationAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type RecommandationConnection {
+  values: [Recommandation]
+  groupBy: RecommandationGroupBy
+  aggregate: RecommandationAggregator
+}
+
+type RecommandationConnectionCreated_at {
+  key: DateTime
+  connection: RecommandationConnection
+}
+
+type RecommandationConnectionCreated_by {
+  key: ID
+  connection: RecommandationConnection
+}
+
+type RecommandationConnectionId {
+  key: ID
+  connection: RecommandationConnection
+}
+
+type RecommandationConnectionJob {
+  key: String
+  connection: RecommandationConnection
+}
+
+type RecommandationConnectionName {
+  key: String
+  connection: RecommandationConnection
+}
+
+type RecommandationConnectionProfil {
+  key: ID
+  connection: RecommandationConnection
+}
+
+type RecommandationConnectionQuote {
+  key: String
+  connection: RecommandationConnection
+}
+
+type RecommandationConnectionUpdated_at {
+  key: DateTime
+  connection: RecommandationConnection
+}
+
+type RecommandationConnectionUpdated_by {
+  key: ID
+  connection: RecommandationConnection
+}
+
+type RecommandationGroupBy {
+  id: [RecommandationConnectionId]
+  created_at: [RecommandationConnectionCreated_at]
+  updated_at: [RecommandationConnectionUpdated_at]
+  name: [RecommandationConnectionName]
+  job: [RecommandationConnectionJob]
+  quote: [RecommandationConnectionQuote]
+  profil: [RecommandationConnectionProfil]
+  created_by: [RecommandationConnectionCreated_by]
+  updated_by: [RecommandationConnectionUpdated_by]
+}
+
+input RecommandationInput {
+  name: String
+  job: String
+  quote: String
+  profil: ID
+  created_by: ID
+  updated_by: ID
+}
+
 input RoleInput {
   name: String!
   description: String
   type: String
   permissions: [ID]
   users: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+type Section {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  titre: String
+  description: String
+  image: UploadFile
+  direction: ENUM_SECTION_DIRECTION
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type SectionAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type SectionConnection {
+  values: [Section]
+  groupBy: SectionGroupBy
+  aggregate: SectionAggregator
+}
+
+type SectionConnectionCreated_at {
+  key: DateTime
+  connection: SectionConnection
+}
+
+type SectionConnectionCreated_by {
+  key: ID
+  connection: SectionConnection
+}
+
+type SectionConnectionDescription {
+  key: String
+  connection: SectionConnection
+}
+
+type SectionConnectionDirection {
+  key: String
+  connection: SectionConnection
+}
+
+type SectionConnectionId {
+  key: ID
+  connection: SectionConnection
+}
+
+type SectionConnectionImage {
+  key: ID
+  connection: SectionConnection
+}
+
+type SectionConnectionTitre {
+  key: String
+  connection: SectionConnection
+}
+
+type SectionConnectionUpdated_at {
+  key: DateTime
+  connection: SectionConnection
+}
+
+type SectionConnectionUpdated_by {
+  key: ID
+  connection: SectionConnection
+}
+
+type SectionGroupBy {
+  id: [SectionConnectionId]
+  created_at: [SectionConnectionCreated_at]
+  updated_at: [SectionConnectionUpdated_at]
+  titre: [SectionConnectionTitre]
+  description: [SectionConnectionDescription]
+  image: [SectionConnectionImage]
+  direction: [SectionConnectionDirection]
+  created_by: [SectionConnectionCreated_by]
+  updated_by: [SectionConnectionUpdated_by]
+}
+
+input SectionInput {
+  titre: String
+  description: String
+  image: ID
+  direction: ENUM_SECTION_DIRECTION
   created_by: ID
   updated_by: ID
 }
@@ -417,6 +893,15 @@ type updateHeaderPayload {
   header: Header
 }
 
+input updateHighlightInput {
+  where: InputID
+  data: editHighlightInput
+}
+
+type updateHighlightPayload {
+  highlight: Highlight
+}
+
 input updateLinkInput {
   where: InputID
   data: editLinkInput
@@ -426,6 +911,24 @@ type updateLinkPayload {
   link: Link
 }
 
+input updatePictureInput {
+  where: InputID
+  data: editPictureInput
+}
+
+type updatePicturePayload {
+  picture: Picture
+}
+
+input updateRecommandationInput {
+  where: InputID
+  data: editRecommandationInput
+}
+
+type updateRecommandationPayload {
+  recommandation: Recommandation
+}
+
 input updateRoleInput {
   where: InputID
   data: editRoleInput
@@ -433,6 +936,15 @@ input updateRoleInput {
 
 type updateRolePayload {
   role: UsersPermissionsRole
+}
+
+input updateSectionInput {
+  where: InputID
+  data: editSectionInput
+}
+
+type updateSectionPayload {
+  section: Section
 }
 
 input updateUserInput {
