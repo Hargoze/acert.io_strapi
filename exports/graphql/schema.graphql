@@ -205,7 +205,7 @@ input editRecommandationInput {
   name: String
   job: String
   quote: String
-  profil: ID
+  profile: ID
   created_by: ID
   updated_by: ID
 }
@@ -520,7 +520,7 @@ input LinkInput {
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Header | HeaderConnection | HeaderAggregator | HeaderGroupBy | HeaderConnectionId | HeaderConnectionCreated_at | HeaderConnectionUpdated_at | HeaderConnectionName | HeaderConnectionCreated_by | HeaderConnectionUpdated_by | createHeaderPayload | updateHeaderPayload | deleteHeaderPayload | Highlight | HighlightConnection | HighlightAggregator | HighlightGroupBy | HighlightConnectionId | HighlightConnectionCreated_at | HighlightConnectionUpdated_at | HighlightConnectionName | HighlightConnectionHref | HighlightConnectionCreated_by | HighlightConnectionUpdated_by | createHighlightPayload | updateHighlightPayload | deleteHighlightPayload | Link | LinkConnection | LinkAggregator | LinkGroupBy | LinkConnectionId | LinkConnectionCreated_at | LinkConnectionUpdated_at | LinkConnectionText | LinkConnectionHref | LinkConnectionStatus | LinkConnectionHeader | LinkConnectionCreated_by | LinkConnectionUpdated_by | createLinkPayload | updateLinkPayload | deleteLinkPayload | Picture | PictureConnection | PictureAggregator | PictureGroupBy | PictureConnectionId | PictureConnectionCreated_at | PictureConnectionUpdated_at | PictureConnectionImage | PictureConnectionDescription | PictureConnectionLink | PictureConnectionHref | PictureConnectionCreated_by | PictureConnectionUpdated_by | createPicturePayload | updatePicturePayload | deletePicturePayload | Recommandation | RecommandationConnection | RecommandationAggregator | RecommandationGroupBy | RecommandationConnectionId | RecommandationConnectionCreated_at | RecommandationConnectionUpdated_at | RecommandationConnectionName | RecommandationConnectionJob | RecommandationConnectionQuote | RecommandationConnectionProfil | RecommandationConnectionCreated_by | RecommandationConnectionUpdated_by | createRecommandationPayload | updateRecommandationPayload | deleteRecommandationPayload | Section | SectionConnection | SectionAggregator | SectionGroupBy | SectionConnectionId | SectionConnectionCreated_at | SectionConnectionUpdated_at | SectionConnectionTitre | SectionConnectionDescription | SectionConnectionImage | SectionConnectionDirection | SectionConnectionCreated_by | SectionConnectionUpdated_by | createSectionPayload | updateSectionPayload | deleteSectionPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Header | HeaderConnection | HeaderAggregator | HeaderGroupBy | HeaderConnectionId | HeaderConnectionCreated_at | HeaderConnectionUpdated_at | HeaderConnectionName | HeaderConnectionCreated_by | HeaderConnectionUpdated_by | createHeaderPayload | updateHeaderPayload | deleteHeaderPayload | Highlight | HighlightConnection | HighlightAggregator | HighlightGroupBy | HighlightConnectionId | HighlightConnectionCreated_at | HighlightConnectionUpdated_at | HighlightConnectionName | HighlightConnectionHref | HighlightConnectionCreated_by | HighlightConnectionUpdated_by | createHighlightPayload | updateHighlightPayload | deleteHighlightPayload | Link | LinkConnection | LinkAggregator | LinkGroupBy | LinkConnectionId | LinkConnectionCreated_at | LinkConnectionUpdated_at | LinkConnectionText | LinkConnectionHref | LinkConnectionStatus | LinkConnectionHeader | LinkConnectionCreated_by | LinkConnectionUpdated_by | createLinkPayload | updateLinkPayload | deleteLinkPayload | Picture | PictureConnection | PictureAggregator | PictureGroupBy | PictureConnectionId | PictureConnectionCreated_at | PictureConnectionUpdated_at | PictureConnectionImage | PictureConnectionDescription | PictureConnectionLink | PictureConnectionHref | PictureConnectionCreated_by | PictureConnectionUpdated_by | createPicturePayload | updatePicturePayload | deletePicturePayload | Recommandation | RecommandationConnection | RecommandationAggregator | RecommandationGroupBy | RecommandationConnectionId | RecommandationConnectionCreated_at | RecommandationConnectionUpdated_at | RecommandationConnectionName | RecommandationConnectionJob | RecommandationConnectionQuote | RecommandationConnectionProfile | RecommandationConnectionCreated_by | RecommandationConnectionUpdated_by | createRecommandationPayload | updateRecommandationPayload | deleteRecommandationPayload | Section | SectionConnection | SectionAggregator | SectionGroupBy | SectionConnectionId | SectionConnectionCreated_at | SectionConnectionUpdated_at | SectionConnectionTitre | SectionConnectionDescription | SectionConnectionImage | SectionConnectionDirection | SectionConnectionCreated_by | SectionConnectionUpdated_by | createSectionPayload | updateSectionPayload | deleteSectionPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   createHeader(input: createHeaderInput): createHeaderPayload
@@ -700,7 +700,7 @@ type Recommandation {
   name: String
   job: String
   quote: String
-  profil: UploadFile
+  profile: UploadFile
   created_by: AdminUser
   updated_by: AdminUser
 }
@@ -741,7 +741,7 @@ type RecommandationConnectionName {
   connection: RecommandationConnection
 }
 
-type RecommandationConnectionProfil {
+type RecommandationConnectionProfile {
   key: ID
   connection: RecommandationConnection
 }
@@ -768,7 +768,7 @@ type RecommandationGroupBy {
   name: [RecommandationConnectionName]
   job: [RecommandationConnectionJob]
   quote: [RecommandationConnectionQuote]
-  profil: [RecommandationConnectionProfil]
+  profile: [RecommandationConnectionProfile]
   created_by: [RecommandationConnectionCreated_by]
   updated_by: [RecommandationConnectionUpdated_by]
 }
@@ -777,7 +777,7 @@ input RecommandationInput {
   name: String
   job: String
   quote: String
-  profil: ID
+  profile: ID
   created_by: ID
   updated_by: ID
 }
