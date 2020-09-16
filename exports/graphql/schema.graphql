@@ -3,6 +3,87 @@ type AdminUser {
   username: String
 }
 
+type Author {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String
+  picture: UploadFile
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type AuthorAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type AuthorConnection {
+  values: [Author]
+  groupBy: AuthorGroupBy
+  aggregate: AuthorAggregator
+}
+
+type AuthorConnectionCreated_at {
+  key: DateTime
+  connection: AuthorConnection
+}
+
+type AuthorConnectionCreated_by {
+  key: ID
+  connection: AuthorConnection
+}
+
+type AuthorConnectionId {
+  key: ID
+  connection: AuthorConnection
+}
+
+type AuthorConnectionName {
+  key: String
+  connection: AuthorConnection
+}
+
+type AuthorConnectionPicture {
+  key: ID
+  connection: AuthorConnection
+}
+
+type AuthorConnectionUpdated_at {
+  key: DateTime
+  connection: AuthorConnection
+}
+
+type AuthorConnectionUpdated_by {
+  key: ID
+  connection: AuthorConnection
+}
+
+type AuthorGroupBy {
+  id: [AuthorConnectionId]
+  created_at: [AuthorConnectionCreated_at]
+  updated_at: [AuthorConnectionUpdated_at]
+  name: [AuthorConnectionName]
+  picture: [AuthorConnectionPicture]
+  created_by: [AuthorConnectionCreated_by]
+  updated_by: [AuthorConnectionUpdated_by]
+}
+
+input AuthorInput {
+  name: String
+  picture: ID
+  created_by: ID
+  updated_by: ID
+}
+
+input createAuthorInput {
+  data: AuthorInput
+}
+
+type createAuthorPayload {
+  author: Author
+}
+
 input createHeaderInput {
   data: HeaderInput
 }
@@ -33,6 +114,14 @@ input createPictureInput {
 
 type createPicturePayload {
   picture: Picture
+}
+
+input createPostInput {
+  data: PostInput
+}
+
+type createPostPayload {
+  post: Post
 }
 
 input createRecommandationInput {
@@ -81,6 +170,14 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
 """
 scalar DateTime
 
+input deleteAuthorInput {
+  where: InputID
+}
+
+type deleteAuthorPayload {
+  author: Author
+}
+
 input deleteHeaderInput {
   where: InputID
 }
@@ -113,6 +210,14 @@ type deletePicturePayload {
   picture: Picture
 }
 
+input deletePostInput {
+  where: InputID
+}
+
+type deletePostPayload {
+  post: Post
+}
+
 input deleteRecommandationInput {
   where: InputID
 }
@@ -143,6 +248,13 @@ input deleteUserInput {
 
 type deleteUserPayload {
   user: UsersPermissionsUser
+}
+
+input editAuthorInput {
+  name: String
+  picture: ID
+  created_by: ID
+  updated_by: ID
 }
 
 input editFileInput {
@@ -201,6 +313,19 @@ input editPictureInput {
   updated_by: ID
 }
 
+input editPostInput {
+  title: String
+  content: String
+  excerpt: String
+  coverImage: ID
+  date: Date
+  slug: String
+  author: ID
+  status: ENUM_POST_STATUS
+  created_by: ID
+  updated_by: ID
+}
+
 input editRecommandationInput {
   name: String
   job: String
@@ -246,6 +371,11 @@ enum ENUM_LINK_STATUS {
   ready
   beta
   coming_soon
+}
+
+enum ENUM_POST_STATUS {
+  published
+  draft
 }
 
 enum ENUM_SECTION_DIRECTION {
@@ -520,9 +650,12 @@ input LinkInput {
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Header | HeaderConnection | HeaderAggregator | HeaderGroupBy | HeaderConnectionId | HeaderConnectionCreated_at | HeaderConnectionUpdated_at | HeaderConnectionName | HeaderConnectionCreated_by | HeaderConnectionUpdated_by | createHeaderPayload | updateHeaderPayload | deleteHeaderPayload | Highlight | HighlightConnection | HighlightAggregator | HighlightGroupBy | HighlightConnectionId | HighlightConnectionCreated_at | HighlightConnectionUpdated_at | HighlightConnectionName | HighlightConnectionHref | HighlightConnectionCreated_by | HighlightConnectionUpdated_by | createHighlightPayload | updateHighlightPayload | deleteHighlightPayload | Link | LinkConnection | LinkAggregator | LinkGroupBy | LinkConnectionId | LinkConnectionCreated_at | LinkConnectionUpdated_at | LinkConnectionText | LinkConnectionHref | LinkConnectionStatus | LinkConnectionHeader | LinkConnectionCreated_by | LinkConnectionUpdated_by | createLinkPayload | updateLinkPayload | deleteLinkPayload | Picture | PictureConnection | PictureAggregator | PictureGroupBy | PictureConnectionId | PictureConnectionCreated_at | PictureConnectionUpdated_at | PictureConnectionImage | PictureConnectionDescription | PictureConnectionLink | PictureConnectionHref | PictureConnectionCreated_by | PictureConnectionUpdated_by | createPicturePayload | updatePicturePayload | deletePicturePayload | Recommandation | RecommandationConnection | RecommandationAggregator | RecommandationGroupBy | RecommandationConnectionId | RecommandationConnectionCreated_at | RecommandationConnectionUpdated_at | RecommandationConnectionName | RecommandationConnectionJob | RecommandationConnectionQuote | RecommandationConnectionProfile | RecommandationConnectionCreated_by | RecommandationConnectionUpdated_by | createRecommandationPayload | updateRecommandationPayload | deleteRecommandationPayload | Section | SectionConnection | SectionAggregator | SectionGroupBy | SectionConnectionId | SectionConnectionCreated_at | SectionConnectionUpdated_at | SectionConnectionTitre | SectionConnectionDescription | SectionConnectionImage | SectionConnectionDirection | SectionConnectionCreated_by | SectionConnectionUpdated_by | createSectionPayload | updateSectionPayload | deleteSectionPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Author | AuthorConnection | AuthorAggregator | AuthorGroupBy | AuthorConnectionId | AuthorConnectionCreated_at | AuthorConnectionUpdated_at | AuthorConnectionName | AuthorConnectionPicture | AuthorConnectionCreated_by | AuthorConnectionUpdated_by | createAuthorPayload | updateAuthorPayload | deleteAuthorPayload | Header | HeaderConnection | HeaderAggregator | HeaderGroupBy | HeaderConnectionId | HeaderConnectionCreated_at | HeaderConnectionUpdated_at | HeaderConnectionName | HeaderConnectionCreated_by | HeaderConnectionUpdated_by | createHeaderPayload | updateHeaderPayload | deleteHeaderPayload | Highlight | HighlightConnection | HighlightAggregator | HighlightGroupBy | HighlightConnectionId | HighlightConnectionCreated_at | HighlightConnectionUpdated_at | HighlightConnectionName | HighlightConnectionHref | HighlightConnectionCreated_by | HighlightConnectionUpdated_by | createHighlightPayload | updateHighlightPayload | deleteHighlightPayload | Link | LinkConnection | LinkAggregator | LinkGroupBy | LinkConnectionId | LinkConnectionCreated_at | LinkConnectionUpdated_at | LinkConnectionText | LinkConnectionHref | LinkConnectionStatus | LinkConnectionHeader | LinkConnectionCreated_by | LinkConnectionUpdated_by | createLinkPayload | updateLinkPayload | deleteLinkPayload | Picture | PictureConnection | PictureAggregator | PictureGroupBy | PictureConnectionId | PictureConnectionCreated_at | PictureConnectionUpdated_at | PictureConnectionImage | PictureConnectionDescription | PictureConnectionLink | PictureConnectionHref | PictureConnectionCreated_by | PictureConnectionUpdated_by | createPicturePayload | updatePicturePayload | deletePicturePayload | Post | PostConnection | PostAggregator | PostGroupBy | PostConnectionId | PostConnectionCreated_at | PostConnectionUpdated_at | PostConnectionTitle | PostConnectionContent | PostConnectionExcerpt | PostConnectionCoverImage | PostConnectionDate | PostConnectionSlug | PostConnectionAuthor | PostConnectionStatus | PostConnectionCreated_by | PostConnectionUpdated_by | createPostPayload | updatePostPayload | deletePostPayload | Recommandation | RecommandationConnection | RecommandationAggregator | RecommandationGroupBy | RecommandationConnectionId | RecommandationConnectionCreated_at | RecommandationConnectionUpdated_at | RecommandationConnectionName | RecommandationConnectionJob | RecommandationConnectionQuote | RecommandationConnectionProfile | RecommandationConnectionCreated_by | RecommandationConnectionUpdated_by | createRecommandationPayload | updateRecommandationPayload | deleteRecommandationPayload | Section | SectionConnection | SectionAggregator | SectionGroupBy | SectionConnectionId | SectionConnectionCreated_at | SectionConnectionUpdated_at | SectionConnectionTitre | SectionConnectionDescription | SectionConnectionImage | SectionConnectionDirection | SectionConnectionCreated_by | SectionConnectionUpdated_by | createSectionPayload | updateSectionPayload | deleteSectionPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
+  createAuthor(input: createAuthorInput): createAuthorPayload
+  updateAuthor(input: updateAuthorInput): updateAuthorPayload
+  deleteAuthor(input: deleteAuthorInput): deleteAuthorPayload
   createHeader(input: createHeaderInput): createHeaderPayload
   updateHeader(input: updateHeaderInput): updateHeaderPayload
   deleteHeader(input: deleteHeaderInput): deleteHeaderPayload
@@ -535,6 +668,9 @@ type Mutation {
   createPicture(input: createPictureInput): createPicturePayload
   updatePicture(input: updatePictureInput): updatePicturePayload
   deletePicture(input: deletePictureInput): deletePicturePayload
+  createPost(input: createPostInput): createPostPayload
+  updatePost(input: updatePostInput): updatePostPayload
+  deletePost(input: deletePostInput): deletePostPayload
   createRecommandation(input: createRecommandationInput): createRecommandationPayload
   updateRecommandation(input: updateRecommandationInput): updateRecommandationPayload
   deleteRecommandation(input: deleteRecommandationInput): deleteRecommandationPayload
@@ -659,7 +795,131 @@ input PictureInput {
   updated_by: ID
 }
 
+type Post {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title: String!
+  content: String
+  excerpt: String
+  coverImage: UploadFile
+  date: Date
+  slug: String
+  author: Author
+  status: ENUM_POST_STATUS
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type PostAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type PostConnection {
+  values: [Post]
+  groupBy: PostGroupBy
+  aggregate: PostAggregator
+}
+
+type PostConnectionAuthor {
+  key: ID
+  connection: PostConnection
+}
+
+type PostConnectionContent {
+  key: String
+  connection: PostConnection
+}
+
+type PostConnectionCoverImage {
+  key: ID
+  connection: PostConnection
+}
+
+type PostConnectionCreated_at {
+  key: DateTime
+  connection: PostConnection
+}
+
+type PostConnectionCreated_by {
+  key: ID
+  connection: PostConnection
+}
+
+type PostConnectionDate {
+  key: ID
+  connection: PostConnection
+}
+
+type PostConnectionExcerpt {
+  key: String
+  connection: PostConnection
+}
+
+type PostConnectionId {
+  key: ID
+  connection: PostConnection
+}
+
+type PostConnectionSlug {
+  key: String
+  connection: PostConnection
+}
+
+type PostConnectionStatus {
+  key: String
+  connection: PostConnection
+}
+
+type PostConnectionTitle {
+  key: String
+  connection: PostConnection
+}
+
+type PostConnectionUpdated_at {
+  key: DateTime
+  connection: PostConnection
+}
+
+type PostConnectionUpdated_by {
+  key: ID
+  connection: PostConnection
+}
+
+type PostGroupBy {
+  id: [PostConnectionId]
+  created_at: [PostConnectionCreated_at]
+  updated_at: [PostConnectionUpdated_at]
+  title: [PostConnectionTitle]
+  content: [PostConnectionContent]
+  excerpt: [PostConnectionExcerpt]
+  coverImage: [PostConnectionCoverImage]
+  date: [PostConnectionDate]
+  slug: [PostConnectionSlug]
+  author: [PostConnectionAuthor]
+  status: [PostConnectionStatus]
+  created_by: [PostConnectionCreated_by]
+  updated_by: [PostConnectionUpdated_by]
+}
+
+input PostInput {
+  title: String!
+  content: String
+  excerpt: String
+  coverImage: ID
+  date: Date
+  slug: String
+  author: ID
+  status: ENUM_POST_STATUS
+  created_by: ID
+  updated_by: ID
+}
+
 type Query {
+  author(id: ID!): Author
+  authors(sort: String, limit: Int, start: Int, where: JSON): [Author]
+  authorsConnection(sort: String, limit: Int, start: Int, where: JSON): AuthorConnection
   header(id: ID!): Header
   headers(sort: String, limit: Int, start: Int, where: JSON): [Header]
   headersConnection(sort: String, limit: Int, start: Int, where: JSON): HeaderConnection
@@ -672,6 +932,9 @@ type Query {
   picture(id: ID!): Picture
   pictures(sort: String, limit: Int, start: Int, where: JSON): [Picture]
   picturesConnection(sort: String, limit: Int, start: Int, where: JSON): PictureConnection
+  post(id: ID!): Post
+  posts(sort: String, limit: Int, start: Int, where: JSON): [Post]
+  postsConnection(sort: String, limit: Int, start: Int, where: JSON): PostConnection
   recommandation(id: ID!): Recommandation
   recommandations(sort: String, limit: Int, start: Int, where: JSON): [Recommandation]
   recommandationsConnection(sort: String, limit: Int, start: Int, where: JSON): RecommandationConnection
@@ -884,6 +1147,15 @@ input SectionInput {
 """A time string with format: HH:mm:ss.SSS"""
 scalar Time
 
+input updateAuthorInput {
+  where: InputID
+  data: editAuthorInput
+}
+
+type updateAuthorPayload {
+  author: Author
+}
+
 input updateHeaderInput {
   where: InputID
   data: editHeaderInput
@@ -918,6 +1190,15 @@ input updatePictureInput {
 
 type updatePicturePayload {
   picture: Picture
+}
+
+input updatePostInput {
+  where: InputID
+  data: editPostInput
+}
+
+type updatePostPayload {
+  post: Post
 }
 
 input updateRecommandationInput {
